@@ -7,6 +7,7 @@
 package Calendarizador;
 
 import java.util.ArrayList;
+import javax.swing.UIManager;
 import org.jfree.ui.RefineryUtilities;
 
 /**
@@ -17,15 +18,15 @@ public class TablaProcesos extends javax.swing.JFrame {
 
     
     static ArrayList<Proceso> processList = new ArrayList<>();
-    static ArrayList<Integer> startTimes = new ArrayList<>();
-    static ArrayList<Integer> finishTimes = new ArrayList<>();
-    static ArrayList<Integer> onHoldTimes = new ArrayList<>();
-    static ArrayList<Integer> burstTimes = new ArrayList<>();
-    static ArrayList<Integer> totalTimes = new ArrayList<>();
     /**
      * Creates new form TablaProcesos
      */
     public TablaProcesos() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initComponents();
     }
 
@@ -55,10 +56,10 @@ public class TablaProcesos extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {0, null, null, null},
-                {0, null, null, null},
-                {0, null, null, null},
-                {0, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "Llegada", "Duración", "Tiempo de espera", "Tiempo total"
@@ -137,74 +138,41 @@ public class TablaProcesos extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        PlanificacionDeProcesos plan = new PlanificacionDeProcesos();
+        String name;
+        int arrival;
+        int burst;
+        int priority = 0;
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            name = "Proceso" + i+1;
+            arrival = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            burst = Integer.parseInt(jTable1.getValueAt(i, 1).toString());
+            //priority = Integer.parseInt(jTable1.getValueAt(i, 0).toString());
+            processList.add(new Proceso(name, arrival, burst, priority));
+        }
         if(jRadioButton1.isSelected()){
             jRadioButton2.setSelected(false);
-            setTaskBurstTimes();
-            setTaskHoldTimes();
-            setTaskStartTimes();
+            //processList = plan.fifo(processList);
+                processList = plan.roundRobin(processList);
         }
         else{
             if(jRadioButton2.isSelected()){
                 jRadioButton1.setSelected(false);
-                setTaskBurstTimes();
-                setSJFBursts();
-                setTaskHoldTimes();
-                setTaskStartTimes();
+                processList = plan.roundRobin(processList);
             }
         }
-        final Gantt demo = new Gantt("Gantt Chart Demo");
+        for (int j = 0; j < processList.size(); j++) {
+            jTable1.setValueAt(processList.get(j).getWaitTime(), j, 2);
+            jTable1.setValueAt(processList.get(j).getTotalTime(), j, 3);
+        }
+        /**final Gantt demo = new Gantt("Gantt Chart Demo");
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
+        */
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void setTaskHoldTimes(){
-        onHoldTimes.add(0);
-        jTable1.setValueAt(0, 0, 2);
-        for (int i = 1; i < 4; i++) {
-            onHoldTimes.add(onHoldTimes.get(i-1)+burstTimes.get(i-1));
-            jTable1.setValueAt(onHoldTimes.get(i), i, 2);
-        }
-    }
     
-    private void setTaskStartTimes(){
-        startTimes.add(0);
-        for (int i = 1; i < 4; i++) {
-            startTimes.add(onHoldTimes.get(i));
-        }
-    }
-    
-    private void setTaskBurstTimes(){
-        for (int i = 0; i < 4; i++) {
-            processList.add(new Proceso("Proceso" + (i+1),Integer.parseInt(jTable1.getValueAt(i, 1).toString())));
-            burstTimes.add(Integer.parseInt(jTable1.getValueAt(i, 1).toString()));
-        }
-    }
-    
-    private void setSJFBursts(){
-        int auxTime;
-        for (int i = 0; i < 3; i++) {
-            for (int j = i+1; j < 4; j++) {
-                if(burstTimes.get(i) > burstTimes.get(j)){
-                    auxTime = burstTimes.get(i);
-                    burstTimes.set(i, burstTimes.get(j));
-                    burstTimes.set(j, auxTime);
-                }
-            }
-        }
-    }
-    
-    public ArrayList<Integer> getTaskStartTimes(){
-        return startTimes;
-    }
-    
-    public ArrayList<Integer> getTaskFinishTimes(){
-        for (int i = 0; i < 4; i++) {
-            int finishTime = burstTimes.get(i) + startTimes.get(i);
-            finishTimes.add(finishTime);
-        }
-        return finishTimes;
-    }
     /**
      * @param args the command line arguments
      */

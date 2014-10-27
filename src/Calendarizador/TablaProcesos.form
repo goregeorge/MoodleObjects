@@ -94,7 +94,7 @@
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {0, null, null, null},&#xa;        {0, null, null, null},&#xa;        {0, null, null, null},&#xa;        {0, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Llegada&quot;, &quot;Duraci&#xf3;n&quot;, &quot;Tiempo de espera&quot;, &quot;Tiempo total&quot;&#xa;    }&#xa;)" type="code"/>
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        {null, null, null, null},&#xa;        {null, null, null, null},&#xa;        {null, null, null, null},&#xa;        {null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Llegada&quot;, &quot;Duraci&#xf3;n&quot;, &quot;Tiempo de espera&quot;, &quot;Tiempo total&quot;&#xa;    }&#xa;)" type="code"/>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0"/>

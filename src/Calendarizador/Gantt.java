@@ -69,8 +69,11 @@ public class Gantt extends ApplicationFrame{
         final TaskSeries s1 = new TaskSeries("Scheduled");
         
         TablaProcesos procesos = new TablaProcesos();
-        ArrayList<Integer> startTimes = procesos.getTaskStartTimes();
-        ArrayList<Integer> finishTimes = procesos.getTaskFinishTimes();
+        
+        //ArrayList<Integer> startTimes = procesos.getTaskStartTimes();
+        //ArrayList<Integer> finishTimes = procesos.getTaskFinishTimes();
+        ArrayList<Integer> startTimes = null;
+        ArrayList<Integer> finishTimes = null;
         
         final Task t1 = new Task("Proceso 1", date(startTimes.get(0)), date(finishTimes.get(0)));
         s1.add(t1);

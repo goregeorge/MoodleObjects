@@ -10,12 +10,18 @@ package Calendarizador;
  */
 public class Proceso {
     private String name;
+    private int arrivalTime;
     private int burstTime;
     private int waitTime;
+    private int totalTime;
+    private int finishTime;
+    private int priority;
     
-    public Proceso(String name, int burst){
+    public Proceso(String name, int arrival, int burst, int priority){
         this.name = name;
         this.burstTime = burst;
+        this.arrivalTime = arrival;
+        this.priority = priority;
     }
 
     /**
@@ -58,5 +64,61 @@ public class Proceso {
      */
     public void setWaitTime(int waitTime) {
         this.waitTime = waitTime;
+    }
+
+    /**
+     * @return the arrivalTime
+     */
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    /**
+     * @param arrivalTime the arrivalTime to set
+     */
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+
+    /**
+     * @return the totalTime
+     */
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    /**
+     * @param totalTime the totalTime to set
+     */
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    /**
+     * @return the priority
+     */
+    public int getPriority() {
+        return priority;
+    }
+
+    /**
+     * @param priority the priority to set
+     */
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    /**
+     * @return the finishTime
+     */
+    public int getFinishTime() {
+        return finishTime;
+    }
+
+    /**
+     * @param finishTime the finishTime to set
+     */
+    public void setFinishTime(int finishTime) {
+        this.finishTime = finishTime;
     }
 }
